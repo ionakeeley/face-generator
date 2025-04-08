@@ -162,4 +162,35 @@ h1 {
 .carbon-icon {
     width: 16px;
     height: 16px;
+}
+
+@font-face {
+    font-family: 'IoCaps';
+    src: url('assets/IoCaps-Regular.otf') format('opentype');
+}
+
+.name-input-container {
+    margin-bottom: 20px;
+}
+
+#name-input {
+    width: 100%;
+    padding: 8px 16px;
+    border: 1px solid #6BFF7A;
+    font-family: 'Inconsolata', monospace;
+    font-size: 14px;
+    background: white;
+}
+
+#name-input:focus {
+    outline: none;
+    background: rgba(107, 255, 122, 0.1);
+}
+
+#name-display {
+    font-family: 'IoCaps', sans-serif;
+    font-size: 24px;
+    text-align: center;
+    margin-top: 20px;
+    min-height: 30px;
 } 

@@ -52,6 +52,8 @@ const featureOptions = document.querySelector('.feature-options');
 const tabs = document.querySelectorAll('.tab');
 const randomizeButton = document.getElementById('randomize');
 const downloadButton = document.getElementById('download');
+const nameInput = document.getElementById('name-input');
+const nameDisplay = document.getElementById('name-display');
 
 // Initialize
 function init() {
@@ -70,6 +72,11 @@ function init() {
 
     // Set up download button
     downloadButton.addEventListener('click', downloadFace);
+
+    // Set up name input
+    nameInput.addEventListener('input', (e) => {
+        nameDisplay.textContent = e.target.value.toUpperCase();
+    });
 
     // Generate random face on load
     randomizeFeatures();
