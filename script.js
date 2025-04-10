@@ -166,8 +166,12 @@ function randomizeFeatures() {
 function downloadFace() {
     const canvas = document.createElement('canvas');
     canvas.width = 500;
-    canvas.height = 500;
+    canvas.height = 550; // Increased height to accommodate name
     const ctx = canvas.getContext('2d');
+    
+    // Draw white background
+    ctx.fillStyle = 'white';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
     
     const layerOrder = ['head', 'eyes', 'nose', 'mouth', 'hair'];
     const images = layerOrder.map(featureType => {
@@ -177,29 +181,50 @@ function downloadFace() {
                 const img = new Image();
                 img.crossOrigin = 'Anonymous';
                 img.onload = () => resolve(img);
-                img.src = getImageUrl(feature.baseSrc);
+                img.src = feature.baseSrc;
             });
         }
         return Promise.resolve(null);
     });
 
     Promise.all(images).then(loadedImages => {
-        ctx.fillStyle = 'white';
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
-        
+        // Draw face layers
         loadedImages.forEach(img => {
             if (img) {
                 ctx.drawImage(img, 0, 0, 500, 500);
             }
         });
         
-        const pngUrl = canvas.toDataURL('image/png');
-        const a = document.createElement('a');
-        a.href = pngUrl;
-        a.download = 'face.png';
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
+        // Draw name
+        if (nameDisplay.textContent) {
+            // Load the IoCaps font
+            const font = new FontFace('IoCaps', 'url(assets/IoCaps-Regular.otf)');
+            font.load().then(() => {
+                document.fonts.add(font);
+                ctx.font = '48px IoCaps';
+                ctx.textAlign = 'center';
+                ctx.fillStyle = 'black';
+                ctx.fillText(nameDisplay.textContent, canvas.width/2, 530);
+                
+                // Create download link
+                const pngUrl = canvas.toDataURL('image/png');
+                const a = document.createElement('a');
+                a.href = pngUrl;
+                a.download = 'face.png';
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+            });
+        } else {
+            // If no name, just download without waiting for font
+            const pngUrl = canvas.toDataURL('image/png');
+            const a = document.createElement('a');
+            a.href = pngUrl;
+            a.download = 'face.png';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+        }
     });
 }
 
