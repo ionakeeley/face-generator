@@ -171,8 +171,8 @@ function downloadFace() {
     const ctx = canvas.getContext('2d');
     
     // Enable high quality image rendering
-    ctx.imageSmoothingEnabled = true;
-    ctx.imageSmoothingQuality = 'high';
+    // ctx.imageSmoothingEnabled = true;
+    // ctx.imageSmoothingQuality = 'high';
     
     // Draw white background
     ctx.fillStyle = 'white';
