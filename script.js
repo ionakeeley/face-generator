@@ -45,6 +45,7 @@ let selectedFeatures = {
     mouth: null,
     hair: null
 };
+let loadedImages = new Map(); // Store loaded images
 
 // DOM Elements
 const faceSvg = document.getElementById('face-svg');
@@ -93,7 +94,14 @@ function updateFeatureOptions() {
         const img = document.createElement('img');
         img.alt = option.name;
         div.appendChild(img);
-        forceImageReload(img, option.baseSrc);
+        
+        // Load image and store it
+        const image = new Image();
+        image.onload = () => {
+            img.src = image.src;
+            loadedImages.set(option.baseSrc, image);
+        };
+        image.src = option.baseSrc;
         
         if (selectedFeatures[currentFeature]?.id === option.id) {
             const checkmark = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
@@ -119,14 +127,19 @@ function selectFeature(option) {
 // Update face display
 function updateFaceDisplay() {
     faceSvg.innerHTML = '';
-    // Define the order of layers (back to front)
     const layerOrder = ['head', 'eyes', 'nose', 'mouth', 'hair'];
     
     layerOrder.forEach(featureType => {
         const feature = selectedFeatures[featureType];
         if (feature) {
             const image = document.createElementNS('http://www.w3.org/2000/svg', 'image');
-            image.setAttribute('href', feature.baseSrc);
+            // Use the already loaded image if available
+            const loadedImage = loadedImages.get(feature.baseSrc);
+            if (loadedImage) {
+                image.setAttribute('href', loadedImage.src);
+            } else {
+                image.setAttribute('href', feature.baseSrc);
+            }
             image.setAttribute('x', '0');
             image.setAttribute('y', '0');
             image.setAttribute('width', '500');
@@ -139,34 +152,14 @@ function updateFaceDisplay() {
 
 // Randomize all features
 function randomizeFeatures() {
-    // First update the selected features
     Object.keys(selectedFeatures).forEach(feature => {
         const options = FEATURE_OPTIONS[feature];
         const randomIndex = Math.floor(Math.random() * options.length);
         selectedFeatures[feature] = options[randomIndex];
     });
 
-    // Update the UI immediately
     updateFeatureOptions();
-
-    // Preload all images before updating the display
-    const layerOrder = ['head', 'eyes', 'nose', 'mouth', 'hair'];
-    const imagePromises = layerOrder.map(featureType => {
-        const feature = selectedFeatures[featureType];
-        if (feature) {
-            return new Promise((resolve) => {
-                const img = new Image();
-                img.onload = () => resolve(img);
-                img.src = feature.baseSrc;
-            });
-        }
-        return Promise.resolve(null);
-    });
-
-    // Once all images are loaded, update the display
-    Promise.all(imagePromises).then(() => {
-        updateFaceDisplay();
-    });
+    updateFaceDisplay(); // Now we can update immediately since images are already loaded
 }
 
 // Download face as PNG
