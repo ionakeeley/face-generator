@@ -165,9 +165,14 @@ function randomizeFeatures() {
 // Download face as PNG
 function downloadFace() {
     const canvas = document.createElement('canvas');
-    canvas.width = 500;
-    canvas.height = 550; // Increased height to accommodate name
+    const scale = 2; // Scale factor for higher quality
+    canvas.width = 500 * scale;
+    canvas.height = 550 * scale; // Increased height to accommodate name
     const ctx = canvas.getContext('2d');
+    
+    // Enable high quality image rendering
+    ctx.imageSmoothingEnabled = true;
+    ctx.imageSmoothingQuality = 'high';
     
     // Draw white background
     ctx.fillStyle = 'white';
@@ -191,7 +196,7 @@ function downloadFace() {
         // Draw face layers
         loadedImages.forEach(img => {
             if (img) {
-                ctx.drawImage(img, 0, 0, 500, 500);
+                ctx.drawImage(img, 0, 0, canvas.width, canvas.width); // Maintain aspect ratio
             }
         });
         
@@ -201,13 +206,13 @@ function downloadFace() {
             const font = new FontFace('IoCaps', 'url(assets/IoCaps-Regular.otf)');
             font.load().then(() => {
                 document.fonts.add(font);
-                ctx.font = '24px IoCaps';
+                ctx.font = `${24 * scale}px IoCaps`; // Scale font size
                 ctx.textAlign = 'center';
                 ctx.fillStyle = 'black';
-                ctx.fillText(nameDisplay.textContent, canvas.width/2, 530);
+                ctx.fillText(nameDisplay.textContent, canvas.width/2, 530 * scale);
                 
                 // Create download link
-                const pngUrl = canvas.toDataURL('image/png');
+                const pngUrl = canvas.toDataURL('image/png', 1.0); // Maximum quality
                 const a = document.createElement('a');
                 a.href = pngUrl;
                 a.download = 'face.png';
@@ -217,7 +222,7 @@ function downloadFace() {
             });
         } else {
             // If no name, just download without waiting for font
-            const pngUrl = canvas.toDataURL('image/png');
+            const pngUrl = canvas.toDataURL('image/png', 1.0); // Maximum quality
             const a = document.createElement('a');
             a.href = pngUrl;
             a.download = 'face.png';
