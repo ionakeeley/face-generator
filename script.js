@@ -201,7 +201,7 @@ function downloadFace() {
             const font = new FontFace('IoCaps', 'url(assets/IoCaps-Regular.otf)');
             font.load().then(() => {
                 document.fonts.add(font);
-                ctx.font = '48px IoCaps';
+                ctx.font = '24px IoCaps';
                 ctx.textAlign = 'center';
                 ctx.fillStyle = 'black';
                 ctx.fillText(nameDisplay.textContent, canvas.width/2, 530);
