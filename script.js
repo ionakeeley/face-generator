@@ -126,8 +126,7 @@ function updateFaceDisplay() {
         const feature = selectedFeatures[featureType];
         if (feature) {
             const image = document.createElementNS('http://www.w3.org/2000/svg', 'image');
-            const imageUrl = getImageUrl(feature.baseSrc);
-            image.setAttribute('href', imageUrl);
+            image.setAttribute('href', feature.baseSrc);
             image.setAttribute('x', '0');
             image.setAttribute('y', '0');
             image.setAttribute('width', '500');
@@ -140,13 +139,34 @@ function updateFaceDisplay() {
 
 // Randomize all features
 function randomizeFeatures() {
+    // First update the selected features
     Object.keys(selectedFeatures).forEach(feature => {
         const options = FEATURE_OPTIONS[feature];
         const randomIndex = Math.floor(Math.random() * options.length);
         selectedFeatures[feature] = options[randomIndex];
     });
+
+    // Update the UI immediately
     updateFeatureOptions();
-    updateFaceDisplay();
+
+    // Preload all images before updating the display
+    const layerOrder = ['head', 'eyes', 'nose', 'mouth', 'hair'];
+    const imagePromises = layerOrder.map(featureType => {
+        const feature = selectedFeatures[featureType];
+        if (feature) {
+            return new Promise((resolve) => {
+                const img = new Image();
+                img.onload = () => resolve(img);
+                img.src = feature.baseSrc;
+            });
+        }
+        return Promise.resolve(null);
+    });
+
+    // Once all images are loaded, update the display
+    Promise.all(imagePromises).then(() => {
+        updateFaceDisplay();
+    });
 }
 
 // Download face as PNG
