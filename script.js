@@ -56,8 +56,26 @@ const downloadButton = document.getElementById('download');
 const nameInput = document.getElementById('name-input');
 const nameDisplay = document.getElementById('name-display');
 
+// Preload all feature images
+function preloadAllImages() {
+    Object.values(FEATURE_OPTIONS).forEach(options => {
+        options.forEach(option => {
+            if (!loadedImages.has(option.baseSrc)) {
+                const image = new Image();
+                image.onload = () => {
+                    loadedImages.set(option.baseSrc, image);
+                };
+                image.src = option.baseSrc;
+            }
+        });
+    });
+}
+
 // Initialize
 function init() {
+    // Preload all images
+    preloadAllImages();
+
     // Set up tab click handlers
     tabs.forEach(tab => {
         tab.addEventListener('click', () => {
