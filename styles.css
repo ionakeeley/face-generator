@@ -151,11 +151,11 @@ h1 {
     object-fit: contain;
 }
 
-#download, #randomize {
+#download, #randomize, #print {
     text-transform: uppercase;
 }
 
-#download svg, #randomize svg {
+#download svg, #randomize svg, #print svg {
     fill: black;
 }
 
@@ -193,4 +193,55 @@ h1 {
     text-align: center;
     margin-top: 20px;
     min-height: 30px;
+}
+
+/* Print styles */
+@media print {
+    .feature-controls, .controls {
+        display: none;
+    }
+    
+    body {
+        margin: 0;
+        padding: 0;
+    }
+    
+    .container {
+        height: auto;
+        display: block;
+    }
+    
+    .face-display {
+        position: static;
+        padding: 0;
+        page-break-after: always;
+        height: 148.5mm; /* A5 height */
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    #face-svg {
+        width: 100%;
+        max-width: 105mm; /* A5 width */
+        height: auto;
+    }
+    
+    #name-display {
+        margin-top: 20px;
+        font-size: 24px;
+    }
+    
+    /* Create a second copy */
+    .face-display::after {
+        content: '';
+        display: block;
+        page-break-after: always;
+    }
+    
+    /* Ensure each face is on its own page */
+    .face-display:last-child {
+        page-break-after: avoid;
+    }
 } 

@@ -49,12 +49,15 @@ let loadedImages = new Map(); // Store loaded images
 
 // DOM Elements
 const faceSvg = document.getElementById('face-svg');
+const faceSvgCopy = document.getElementById('face-svg-copy');
 const featureOptions = document.querySelector('.feature-options');
 const tabs = document.querySelectorAll('.tab');
 const randomizeButton = document.getElementById('randomize');
 const downloadButton = document.getElementById('download');
+const printButton = document.getElementById('print');
 const nameInput = document.getElementById('name-input');
 const nameDisplay = document.getElementById('name-display');
+const nameDisplayCopy = document.getElementById('name-display-copy');
 
 // Preload all feature images
 function preloadAllImages() {
@@ -92,9 +95,14 @@ function init() {
     // Set up download button
     downloadButton.addEventListener('click', downloadFace);
 
+    // Set up print button
+    printButton.addEventListener('click', printFace);
+
     // Set up name input
     nameInput.addEventListener('input', (e) => {
-        nameDisplay.textContent = e.target.value.toUpperCase();
+        const name = e.target.value.toUpperCase();
+        nameDisplay.textContent = name;
+        nameDisplayCopy.textContent = name;
     });
 
     // Generate random face on load
@@ -150,13 +158,14 @@ function selectFeature(option) {
 // Update face display
 function updateFaceDisplay() {
     faceSvg.innerHTML = '';
+    faceSvgCopy.innerHTML = '';
     const layerOrder = ['head', 'eyes', 'nose', 'mouth', 'hair'];
     
     layerOrder.forEach(featureType => {
         const feature = selectedFeatures[featureType];
         if (feature) {
+            // Update main face
             const image = document.createElementNS('http://www.w3.org/2000/svg', 'image');
-            // Use the already loaded image if available
             const loadedImage = loadedImages.get(feature.baseSrc);
             if (loadedImage) {
                 image.setAttribute('href', loadedImage.src);
@@ -169,6 +178,10 @@ function updateFaceDisplay() {
             image.setAttribute('height', '500');
             image.setAttribute('preserveAspectRatio', 'none');
             faceSvg.appendChild(image);
+            
+            // Update print copy
+            const imageCopy = image.cloneNode(true);
+            faceSvgCopy.appendChild(imageCopy);
         }
     });
 }
@@ -254,6 +267,11 @@ function downloadFace() {
             document.body.removeChild(a);
         }
     });
+}
+
+// Print face
+function printFace() {
+    window.print();
 }
 
 // Start the application
