@@ -95,13 +95,18 @@ function updateFeatureOptions() {
         img.alt = option.name;
         div.appendChild(img);
         
-        // Load image and store it
-        const image = new Image();
-        image.onload = () => {
-            img.src = image.src;
-            loadedImages.set(option.baseSrc, image);
-        };
-        image.src = option.baseSrc;
+        // Use cached image if available
+        if (loadedImages.has(option.baseSrc)) {
+            img.src = loadedImages.get(option.baseSrc).src;
+        } else {
+            // Load image and store it
+            const image = new Image();
+            image.onload = () => {
+                img.src = image.src;
+                loadedImages.set(option.baseSrc, image);
+            };
+            image.src = option.baseSrc;
+        }
         
         if (selectedFeatures[currentFeature]?.id === option.id) {
             const checkmark = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
@@ -171,8 +176,8 @@ function downloadFace() {
     const ctx = canvas.getContext('2d');
     
     // Enable high quality image rendering
-    // ctx.imageSmoothingEnabled = true;
-    // ctx.imageSmoothingQuality = 'high';
+    ctx.imageSmoothingEnabled = true;
+    ctx.imageSmoothingQuality = 'high';
     
     // Draw white background
     ctx.fillStyle = 'white';
