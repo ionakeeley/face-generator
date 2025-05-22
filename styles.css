@@ -161,7 +161,7 @@ h1 {
 }
 
 #download svg, #randomize svg, #print svg {
-    fill: black;
+    fill: #014EFF;
 }
 
 .carbon-icon {
@@ -190,6 +190,10 @@ h1 {
 #name-input:focus {
     outline: none;
     background: rgba(1, 78, 255, 0.1);
+}
+
+#name-input::placeholder {
+    color: rgba(1, 78, 255, 0.5);
 }
 
 #name-display, #name-display-copy-1, #name-display-copy-2, #name-display-copy-3 {
