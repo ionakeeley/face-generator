@@ -2,7 +2,8 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Inconsolata', monospace;
+    font-family: 'Drowner', sans-serif;
+    color: #014EFF;
 }
 
 body {
@@ -41,10 +42,10 @@ body {
 
 button {
     padding: 8px 16px;
-    border: 1px solid #014EFF;
+    border: 2px solid #014EFF;
     background: white;
     cursor: pointer;
-    font-family: 'Inconsolata', monospace;
+    font-family: 'Drowner', sans-serif;
     font-size: 14px;
     display: inline-flex;
     align-items: center;
@@ -58,7 +59,7 @@ button:hover {
 .feature-controls {
     width: 400px;
     padding: 30px;
-    border-left: 1px solid #ddd;
+    border-left: 2px solid #014EFF;
     height: 100vh;
     display: flex;
     flex-direction: column;
@@ -68,6 +69,7 @@ button:hover {
 h1 {
     margin-bottom: 40px;
     font-size: 20px;
+    font-family: 'Drowner', sans-serif;
 }
 
 .feature-tabs {
@@ -80,10 +82,11 @@ h1 {
 .tab {
     padding: 12px 20px;
     text-align: center;
-    border: 1px solid #014EFF;
+    border: 2px solid #014EFF;
     background: white;
     text-transform: uppercase;
     font-size: 16px;
+    font-family: 'Drowner', sans-serif;
 }
 
 .tab.active {
@@ -114,7 +117,7 @@ h1 {
 }
 
 .feature-option {
-    border: 1px solid #ddd;
+    border: 2px solid #014EFF;
     padding: 10px;
     cursor: pointer;
     aspect-ratio: 1;
@@ -178,8 +181,8 @@ h1 {
 #name-input {
     width: 100%;
     padding: 12px 20px;
-    border: 1px solid #014EFF;
-    font-family: 'Inconsolata', monospace;
+    border: 2px solid #014EFF;
+    font-family: 'Drowner', sans-serif;
     font-size: 16px;
     background: white;
 }
@@ -189,8 +192,8 @@ h1 {
     background: rgba(1, 78, 255, 0.1);
 }
 
-#name-display {
-    font-family: 'IoCaps', sans-serif;
+#name-display, #name-display-copy-1, #name-display-copy-2, #name-display-copy-3 {
+    font-family: 'Drowner', sans-serif;
     font-size: 24px;
     text-align: center;
     margin-top: 20px;
@@ -206,7 +209,7 @@ h1 {
     body {
         margin: 0;
         padding: 0;
-        font-family: 'Inconsolata', monospace;
+        font-family: 'Drowner', sans-serif;
     }
     
     .container {
@@ -270,4 +273,13 @@ h1 {
         width: 90%;
         height: 90%;
     }
+}
+
+/* Custom Fonts */
+@font-face {
+    font-family: 'Drowner';
+    src: url('assets/Drowner-Free.otf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
 } 
