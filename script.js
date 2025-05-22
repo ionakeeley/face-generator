@@ -49,7 +49,9 @@ let loadedImages = new Map(); // Store loaded images
 
 // DOM Elements
 const faceSvg = document.getElementById('face-svg');
-const faceSvgCopy = document.getElementById('face-svg-copy');
+const faceSvgCopy1 = document.getElementById('face-svg-copy-1');
+const faceSvgCopy2 = document.getElementById('face-svg-copy-2');
+const faceSvgCopy3 = document.getElementById('face-svg-copy-3');
 const featureOptions = document.querySelector('.feature-options');
 const tabs = document.querySelectorAll('.tab');
 const randomizeButton = document.getElementById('randomize');
@@ -57,7 +59,9 @@ const downloadButton = document.getElementById('download');
 const printButton = document.getElementById('print');
 const nameInput = document.getElementById('name-input');
 const nameDisplay = document.getElementById('name-display');
-const nameDisplayCopy = document.getElementById('name-display-copy');
+const nameDisplayCopy1 = document.getElementById('name-display-copy-1');
+const nameDisplayCopy2 = document.getElementById('name-display-copy-2');
+const nameDisplayCopy3 = document.getElementById('name-display-copy-3');
 
 // Preload all feature images
 function preloadAllImages() {
@@ -102,7 +106,9 @@ function init() {
     nameInput.addEventListener('input', (e) => {
         const name = e.target.value.toUpperCase();
         nameDisplay.textContent = name;
-        nameDisplayCopy.textContent = name;
+        nameDisplayCopy1.textContent = name;
+        nameDisplayCopy2.textContent = name;
+        nameDisplayCopy3.textContent = name;
     });
 
     // Generate random face on load
@@ -158,7 +164,9 @@ function selectFeature(option) {
 // Update face display
 function updateFaceDisplay() {
     faceSvg.innerHTML = '';
-    faceSvgCopy.innerHTML = '';
+    faceSvgCopy1.innerHTML = '';
+    faceSvgCopy2.innerHTML = '';
+    faceSvgCopy3.innerHTML = '';
     const layerOrder = ['head', 'eyes', 'nose', 'mouth', 'hair'];
     
     layerOrder.forEach(featureType => {
@@ -179,9 +187,13 @@ function updateFaceDisplay() {
             image.setAttribute('preserveAspectRatio', 'none');
             faceSvg.appendChild(image);
             
-            // Update print copy
-            const imageCopy = image.cloneNode(true);
-            faceSvgCopy.appendChild(imageCopy);
+            // Update print copies
+            const imageCopy1 = image.cloneNode(true);
+            const imageCopy2 = image.cloneNode(true);
+            const imageCopy3 = image.cloneNode(true);
+            faceSvgCopy1.appendChild(imageCopy1);
+            faceSvgCopy2.appendChild(imageCopy2);
+            faceSvgCopy3.appendChild(imageCopy3);
         }
     });
 }
