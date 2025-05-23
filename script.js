@@ -55,7 +55,6 @@ const faceSvgCopy3 = document.getElementById('face-svg-copy-3');
 const featureOptions = document.querySelector('.feature-options');
 const tabs = document.querySelectorAll('.tab');
 const randomizeButton = document.getElementById('randomize');
-const downloadButton = document.getElementById('download');
 const printButton = document.getElementById('print');
 const nameInput = document.getElementById('name-input');
 const nameDisplay = document.getElementById('name-display');
@@ -96,11 +95,8 @@ function init() {
     // Set up randomize button
     randomizeButton.addEventListener('click', randomizeFeatures);
 
-    // Set up download button
-    downloadButton.addEventListener('click', downloadFace);
-
     // Set up print button
-    printButton.addEventListener('click', printFace);
+    printButton.addEventListener('click', downloadFace);
 
     // Set up name input
     nameInput.addEventListener('input', (e) => {
@@ -314,11 +310,6 @@ function downloadFace() {
             </html>
         `);
     });
-}
-
-// Print face
-function printFace() {
-    window.print();
 }
 
 // Start the application
