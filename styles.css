@@ -2,7 +2,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Drowner', sans-serif;
+    font-family: 'Drowner', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     color: #014EFF;
 }
 
@@ -262,11 +262,13 @@ h1 {
 /* Add iPad-specific media query */
 @media screen and (max-width: 1024px) {
     .feature-controls {
-        width: 450px;
+        width: 500px;
+        min-width: 500px;
     }
     
     .feature-options {
         grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
     }
     
     .feature-option {
@@ -277,6 +279,10 @@ h1 {
         width: 90%;
         height: 90%;
     }
+
+    .container {
+        overflow-x: auto;
+    }
 }
 
 /* Custom Fonts */
@@ -285,5 +291,5 @@ h1 {
     src: url('assets/Drowner-Free.otf') format('opentype');
     font-weight: normal;
     font-style: normal;
-    font-display: swap;
+    font-display: block;
 } 
