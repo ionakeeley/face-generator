@@ -160,15 +160,27 @@ function selectFeature(option) {
 
 // Update face display
 function updateFaceDisplay() {
-    const faceImage = document.getElementById('face-image');
-    const faceSvg = document.getElementById('face-svg');
-    
-    // Clear existing content
     faceSvg.innerHTML = '';
+    const layerOrder = ['head', 'eyes', 'nose', 'mouth', 'hair'];
     
-    // Clone the face image
-    const clonedImage = faceImage.cloneNode(true);
-    faceSvg.appendChild(clonedImage);
+    layerOrder.forEach(featureType => {
+        const feature = selectedFeatures[featureType];
+        if (feature) {
+            const image = document.createElementNS('http://www.w3.org/2000/svg', 'image');
+            const loadedImage = loadedImages.get(feature.baseSrc);
+            if (loadedImage) {
+                image.setAttribute('href', loadedImage.src);
+            } else {
+                image.setAttribute('href', feature.baseSrc);
+            }
+            image.setAttribute('x', '0');
+            image.setAttribute('y', '0');
+            image.setAttribute('width', '500');
+            image.setAttribute('height', '500');
+            image.setAttribute('preserveAspectRatio', 'none');
+            faceSvg.appendChild(image);
+        }
+    });
 }
 
 // Randomize all features
