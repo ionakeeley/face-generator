@@ -104,15 +104,23 @@ function init() {
 
     // Set up name input
     nameInput.addEventListener('input', (e) => {
-        const name = e.target.value;
+        const name = e.target.value.toUpperCase();
         nameDisplay.textContent = name;
-        [nameDisplayCopy1, nameDisplayCopy2, nameDisplayCopy3].forEach(copy => {
-            copy.textContent = name;
-        });
+        nameDisplayCopy1.textContent = name;
+        nameDisplayCopy2.textContent = name;
+        nameDisplayCopy3.textContent = name;
     });
 
-    // Generate random face on load
-    randomizeFeatures();
+    // Set default features if none are selected
+    if (!selectedFeatures.head) {
+        Object.keys(FEATURE_OPTIONS).forEach(feature => {
+            selectedFeatures[feature] = FEATURE_OPTIONS[feature][0];
+        });
+    }
+
+    // Update the display
+    updateFeatureOptions();
+    updateFaceDisplay();
 }
 
 // Update feature options display
@@ -163,23 +171,33 @@ function selectFeature(option) {
 
 // Update face display
 function updateFaceDisplay() {
-    // Clear the face SVG
     faceSvg.innerHTML = '';
+    faceSvgCopy1.innerHTML = '';
+    faceSvgCopy2.innerHTML = '';
+    faceSvgCopy3.innerHTML = '';
+    const layerOrder = ['head', 'eyes', 'nose', 'mouth', 'hair'];
     
-    // Create a new image element
-    const faceImage = document.createElement('img');
-    faceImage.src = `https://api.dicebear.com/7.x/avataaars/svg?seed=${currentSeed}&${getFeatureParams()}&cache=${Date.now()}`;
-    faceImage.style.width = '100%';
-    faceImage.style.height = '100%';
-    
-    // Add the image to the SVG
-    faceSvg.appendChild(faceImage);
-    
-    // Update all copies for printing
-    [faceSvgCopy1, faceSvgCopy2, faceSvgCopy3].forEach(copy => {
-        copy.innerHTML = '';
-        const copyImage = faceImage.cloneNode(true);
-        copy.appendChild(copyImage);
+    layerOrder.forEach(featureType => {
+        const feature = selectedFeatures[featureType];
+        if (feature) {
+            // Create images for all copies
+            const createImage = (svgElement) => {
+                const image = document.createElementNS('http://www.w3.org/2000/svg', 'image');
+                image.setAttribute('href', feature.baseSrc);
+                image.setAttribute('x', '0');
+                image.setAttribute('y', '0');
+                image.setAttribute('width', '500');
+                image.setAttribute('height', '500');
+                image.setAttribute('preserveAspectRatio', 'none');
+                svgElement.appendChild(image);
+            };
+
+            // Add images to all SVGs
+            createImage(faceSvg);
+            createImage(faceSvgCopy1);
+            createImage(faceSvgCopy2);
+            createImage(faceSvgCopy3);
+        }
     });
 }
 
