@@ -268,6 +268,13 @@ function downloadFace() {
                 <head>
                     <title>Face Generator - Download</title>
                     <style>
+                        @font-face {
+                            font-family: 'Drowner';
+                            src: url('assets/Drowner-Free.otf') format('opentype');
+                            font-weight: normal;
+                            font-style: normal;
+                            font-display: swap;
+                        }
                         body {
                             font-family: 'Drowner', sans-serif;
                             display: flex;
@@ -292,6 +299,7 @@ function downloadFace() {
                             line-height: 1.5;
                             margin: 20px 0;
                             font-size: 18px;
+                            font-family: 'Drowner', sans-serif;
                         }
                     </style>
                 </head>
