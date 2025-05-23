@@ -64,6 +64,19 @@ button:hover {
     display: flex;
     flex-direction: column;
     flex-shrink: 0;
+    overflow-y: auto;
+    position: relative;
+}
+
+.feature-controls::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: #014EFF;
+    z-index: 1;
 }
 
 h1 {
@@ -101,20 +114,10 @@ h1 {
     gap: 20px;
     padding: 20px 0;
     flex-grow: 1;
-    overflow: visible;
 }
 
 .feature-options::-webkit-scrollbar {
-    width: 8px;
-}
-
-.feature-options::-webkit-scrollbar-track {
-    background: #f1f1f1;
-}
-
-.feature-options::-webkit-scrollbar-thumb {
-    background: #ddd;
-    border-radius: 4px;
+    display: none;
 }
 
 .feature-option {
