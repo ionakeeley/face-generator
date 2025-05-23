@@ -252,35 +252,73 @@ function downloadFace() {
         });
         
         // Draw name
-        if (nameDisplay.textContent) {
-            // Load the IoCaps font
-            const font = new FontFace('IoCaps', 'url(assets/IoCaps-Regular.otf)');
-            font.load().then(() => {
-                document.fonts.add(font);
-                ctx.font = `${24 * scale}px IoCaps`; // Scale font size
-                ctx.textAlign = 'center';
-                ctx.fillStyle = 'black';
-                ctx.fillText(nameDisplay.textContent, canvas.width/2, 530 * scale);
-                
-                // Create download link
-                const pngUrl = canvas.toDataURL('image/png', 1.0); // Maximum quality
-                const a = document.createElement('a');
-                a.href = pngUrl;
-                a.download = 'face.png';
-                document.body.appendChild(a);
-                a.click();
-                document.body.removeChild(a);
-            });
-        } else {
-            // If no name, just download without waiting for font
-            const pngUrl = canvas.toDataURL('image/png', 1.0); // Maximum quality
-            const a = document.createElement('a');
-            a.href = pngUrl;
-            a.download = 'face.png';
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-        }
+        ctx.fillStyle = '#014EFF';
+        ctx.font = `${40 * scale}px Drowner`;
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText(nameDisplay.textContent, canvas.width / 2, canvas.width + (50 * scale));
+        
+        // Convert to PNG
+        const pngUrl = canvas.toDataURL('image/png');
+        
+        // Open in new tab
+        const newTab = window.open();
+        newTab.document.write(`
+            <html>
+                <head>
+                    <title>Face Generator - Download</title>
+                    <style>
+                        body {
+                            font-family: 'Drowner', sans-serif;
+                            display: flex;
+                            flex-direction: column;
+                            align-items: center;
+                            justify-content: center;
+                            min-height: 100vh;
+                            margin: 0;
+                            padding: 20px;
+                            background: #f5f5f5;
+                            color: #014EFF;
+                        }
+                        img {
+                            max-width: 100%;
+                            height: auto;
+                            margin: 20px 0;
+                            border: 2px solid #014EFF;
+                        }
+                        .instructions {
+                            text-align: center;
+                            max-width: 600px;
+                            line-height: 1.5;
+                            margin: 20px 0;
+                        }
+                        button {
+                            padding: 12px 24px;
+                            border: 2px solid #014EFF;
+                            background: white;
+                            color: #014EFF;
+                            font-family: 'Drowner', sans-serif;
+                            font-size: 16px;
+                            cursor: pointer;
+                            margin: 10px;
+                        }
+                        button:hover {
+                            background: rgba(1, 78, 255, 0.1);
+                        }
+                    </style>
+                </head>
+                <body>
+                    <h1>Your Generated Face</h1>
+                    <img src="${pngUrl}" alt="Generated Face">
+                    <div class="instructions">
+                        <p>1. Save to camera roll</p>
+                        <p>2. Open Tiny Print app</p>
+                        <p>3. Select Photo Printing and print your face!</p>
+                    </div>
+                    <button onclick="window.location.href='${pngUrl}'" download="face.png">Download PNG</button>
+                </body>
+            </html>
+        `);
     });
 }
 
