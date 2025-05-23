@@ -217,8 +217,8 @@ function randomizeFeatures() {
 function downloadFace() {
     const canvas = document.createElement('canvas');
     const scale = 2; // Scale factor for higher quality
-    canvas.width = 500 * scale;
-    canvas.height = 550 * scale; // Increased height to accommodate name
+    canvas.width = 300 * scale; // Reduced width
+    canvas.height = 350 * scale; // Reduced height
     const ctx = canvas.getContext('2d');
     
     // Enable high quality image rendering
@@ -253,10 +253,10 @@ function downloadFace() {
         
         // Draw name
         ctx.fillStyle = '#014EFF';
-        ctx.font = `${40 * scale}px Drowner`;
+        ctx.font = `${24 * scale}px Drowner`; // Reduced font size
         ctx.textAlign = 'center';
         ctx.textBaseline = 'middle';
-        ctx.fillText(nameDisplay.textContent, canvas.width / 2, canvas.width + (50 * scale));
+        ctx.fillText(nameDisplay.textContent, canvas.width / 2, canvas.width + (25 * scale)); // Adjusted position
         
         // Convert to PNG
         const pngUrl = canvas.toDataURL('image/png');
@@ -281,41 +281,27 @@ function downloadFace() {
                             color: #014EFF;
                         }
                         img {
-                            max-width: 100%;
+                            width: 300px;
                             height: auto;
                             margin: 20px 0;
                             border: 2px solid #014EFF;
                         }
                         .instructions {
                             text-align: center;
-                            max-width: 600px;
+                            max-width: 300px;
                             line-height: 1.5;
                             margin: 20px 0;
-                        }
-                        button {
-                            padding: 12px 24px;
-                            border: 2px solid #014EFF;
-                            background: white;
-                            color: #014EFF;
-                            font-family: 'Drowner', sans-serif;
-                            font-size: 16px;
-                            cursor: pointer;
-                            margin: 10px;
-                        }
-                        button:hover {
-                            background: rgba(1, 78, 255, 0.1);
+                            font-size: 18px;
                         }
                     </style>
                 </head>
                 <body>
-                    <h1>Your Generated Face</h1>
-                    <img src="${pngUrl}" alt="Generated Face">
                     <div class="instructions">
                         <p>1. Save to camera roll</p>
                         <p>2. Open Tiny Print app</p>
                         <p>3. Select Photo Printing and print your face!</p>
                     </div>
-                    <button onclick="window.location.href='${pngUrl}'" download="face.png">Download PNG</button>
+                    <img src="${pngUrl}" alt="Generated Face">
                 </body>
             </html>
         `);
