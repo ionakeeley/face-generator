@@ -57,7 +57,7 @@ button:hover {
 }
 
 .feature-controls {
-    width: 600px;
+    width: 450px;
     padding: 30px;
     border-left: 2px solid #014EFF;
     height: 100vh;
@@ -262,8 +262,8 @@ h1 {
 /* Add iPad-specific media query */
 @media screen and (max-width: 1024px) {
     .feature-controls {
-        width: 600px;
-        min-width: 600px;
+        width: 450px;
+        min-width: 450px;
     }
     
     .feature-options {

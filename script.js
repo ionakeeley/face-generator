@@ -111,8 +111,14 @@ function init() {
         nameDisplayCopy3.textContent = name;
     });
 
-    // Generate random face on load
-    randomizeFeatures();
+    // Set default features
+    Object.keys(selectedFeatures).forEach(feature => {
+        selectedFeatures[feature] = FEATURE_OPTIONS[feature][0];
+    });
+
+    // Update display with default features
+    updateFeatureOptions();
+    updateFaceDisplay();
 }
 
 // Update feature options display
