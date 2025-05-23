@@ -25,13 +25,10 @@ body {
     justify-content: center;
     position: relative;
     padding: 20px;
-    gap: 20px;
 }
 
 #face-svg {
     background: white;
-    max-width: 100%;
-    height: auto;
 }
 
 .controls {
@@ -60,7 +57,7 @@ button:hover {
 }
 
 .feature-controls {
-    width: 550px;
+    width: 400px;
     padding: 30px;
     border-left: 2px solid #014EFF;
     height: 100vh;
@@ -190,13 +187,13 @@ h1 {
     background: white;
 }
 
+#name-input::placeholder {
+    color: rgba(1, 78, 255, 0.5);
+}
+
 #name-input:focus {
     outline: none;
     background: rgba(1, 78, 255, 0.1);
-}
-
-#name-input::placeholder {
-    color: rgba(1, 78, 255, 0.5);
 }
 
 #name-display, #name-display-copy-1, #name-display-copy-2, #name-display-copy-3 {
@@ -265,12 +262,11 @@ h1 {
 /* Add iPad-specific media query */
 @media screen and (max-width: 1024px) {
     .feature-controls {
-        width: 600px;
+        width: 450px;
     }
     
     .feature-options {
         grid-template-columns: repeat(2, 1fr);
-        gap: 20px;
     }
     
     .feature-option {
@@ -289,12 +285,5 @@ h1 {
     src: url('assets/Drowner-Free.otf') format('opentype');
     font-weight: normal;
     font-style: normal;
-    font-display: block;
-}
-
-#name-display {
-    font-family: 'Drowner', sans-serif;
-    font-size: 24px;
-    text-align: center;
-    min-height: 30px;
+    font-display: swap;
 } 
