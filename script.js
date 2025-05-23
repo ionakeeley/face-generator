@@ -99,6 +99,9 @@ function init() {
     // Set up download button
     downloadButton.addEventListener('click', downloadFace);
 
+    // Set up print button
+    printButton.addEventListener('click', printFace);
+
     // Set up name input
     nameInput.addEventListener('input', (e) => {
         const name = e.target.value.toUpperCase();
@@ -161,11 +164,15 @@ function selectFeature(option) {
 // Update face display
 function updateFaceDisplay() {
     faceSvg.innerHTML = '';
+    faceSvgCopy1.innerHTML = '';
+    faceSvgCopy2.innerHTML = '';
+    faceSvgCopy3.innerHTML = '';
     const layerOrder = ['head', 'eyes', 'nose', 'mouth', 'hair'];
     
     layerOrder.forEach(featureType => {
         const feature = selectedFeatures[featureType];
         if (feature) {
+            // Update main face
             const image = document.createElementNS('http://www.w3.org/2000/svg', 'image');
             const loadedImage = loadedImages.get(feature.baseSrc);
             if (loadedImage) {
@@ -179,6 +186,14 @@ function updateFaceDisplay() {
             image.setAttribute('height', '500');
             image.setAttribute('preserveAspectRatio', 'none');
             faceSvg.appendChild(image);
+            
+            // Update print copies
+            const imageCopy1 = image.cloneNode(true);
+            const imageCopy2 = image.cloneNode(true);
+            const imageCopy3 = image.cloneNode(true);
+            faceSvgCopy1.appendChild(imageCopy1);
+            faceSvgCopy2.appendChild(imageCopy2);
+            faceSvgCopy3.appendChild(imageCopy3);
         }
     });
 }
@@ -264,6 +279,11 @@ function downloadFace() {
             document.body.removeChild(a);
         }
     });
+}
+
+// Print face
+function printFace() {
+    window.print();
 }
 
 // Start the application

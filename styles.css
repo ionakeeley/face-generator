@@ -57,7 +57,7 @@ button:hover {
 }
 
 .feature-controls {
-    width: 500px;
+    width: 600px;
     padding: 30px;
     border-left: 2px solid #014EFF;
     height: 100vh;
@@ -204,61 +204,92 @@ h1 {
     min-height: 30px;
 }
 
+/* Print styles */
+@media print {
+    .feature-controls, .controls {
+        display: none;
+    }
+    
+    body {
+        margin: 0;
+        padding: 0;
+        font-family: 'Drowner', sans-serif;
+    }
+    
+    .container {
+        height: 297mm; /* A4 height */
+        width: 210mm; /* A4 width */
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: 1fr 1fr;
+        gap: 0;
+    }
+    
+    .face-display {
+        position: static;
+        padding: 0;
+        height: 148.5mm; /* Half of A4 height */
+        width: 105mm; /* Half of A4 width */
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        margin: 0;
+    }
+    
+    .print-only {
+        display: block !important;
+    }
+    
+    #face-svg, #face-svg-copy {
+        width: 80mm; /* Slightly smaller than quadrant */
+        height: auto;
+    }
+    
+    #name-display, #name-display-copy {
+        margin-top: 10px;
+        font-size: 24px;
+        font-family: 'IoCaps', sans-serif;
+    }
+    
+    /* Remove page numbers and set A4 size */
+    @page {
+        margin: 0;
+        size: A4;
+    }
+}
+
+/* Add iPad-specific media query */
+@media screen and (max-width: 1024px) {
+    .feature-controls {
+        width: 600px;
+        min-width: 600px;
+    }
+    
+    .feature-options {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 15px;
+    }
+    
+    .feature-option {
+        padding: 12px;
+    }
+    
+    .feature-option img {
+        width: 85%;
+        height: 85%;
+    }
+
+    .container {
+        overflow-x: auto;
+    }
+}
+
 /* Custom Fonts */
 @font-face {
     font-family: 'Drowner';
     src: url('assets/Drowner-Free.otf') format('opentype');
     font-weight: normal;
     font-style: normal;
-    font-display: swap;
-}
-
-/* iPad and tablet styles */
-@media screen and (max-width: 1024px) {
-    .container {
-        flex-direction: column;
-        height: auto;
-        min-height: 100vh;
-        overflow-x: hidden;
-    }
-
-    .face-display {
-        width: 100%;
-        min-height: 50vh;
-        padding: 40px 20px;
-    }
-
-    .feature-controls {
-        width: 100%;
-        min-width: 100%;
-        height: auto;
-        border-left: none;
-        border-top: 2px solid #014EFF;
-        padding: 20px;
-    }
-
-    .feature-options {
-        grid-template-columns: repeat(4, 1fr);
-        gap: 15px;
-        max-width: 1000px;
-        margin: 0 auto;
-    }
-
-    .feature-option {
-        padding: 12px;
-    }
-
-    .feature-option img {
-        width: 85%;
-        height: 85%;
-    }
-
-    .controls {
-        position: fixed;
-        top: 20px;
-        left: 20px;
-        bottom: auto;
-    }
-}
-
-/* Remove all print styles */ 
+    font-display: block;
+} 
